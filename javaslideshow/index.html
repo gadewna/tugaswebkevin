@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Enhanced JavaScript Slideshow</title>
+  <style>
+    .slideshow-container {
+      max-width: 600px;
+      position: relative;
+      margin: auto;
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+      animation: fade 1s;
+    }
+
+    .slide img {
+      width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+
+    .prev, .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      padding: 12px;
+      margin-top: -22px;
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      background-color: rgba(0, 0, 0, 0.5);
+      user-select: none;
+    }
+
+    .prev {
+      left: 0;
+      border-radius: 0 3px 3px 0;
+    }
+
+    .next {
+      right: 0;
+      border-radius: 3px 0 0 3px;
+    }
+
+    /* Dot navigation */
+    .dot {
+      height: 15px;
+      width: 15px;
+      margin: 5px 4px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      cursor: pointer;
+      transition: background-color 0.6s ease;
+    }
+
+    .active {
+      background-color: #717171;
+    }
+
+    /* Fade animation */
+    @keyframes fade {
+      from { opacity: 0.4; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<h2 style="text-align:center">Enhanced JavaScript Slideshow</h2>
+
+<div class="slideshow-container" id="slideshow-container">
+  <div class="slide"><img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=800&q=80" alt="Baguette">
+</div>
+  <div class="slide"><img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&q=80" alt="White Bread">
+</div>
+  <div class="slide"><img src="image.png" alt="Bread">
+</div>
+
+  <a class="prev" onclick="changeSlide(-1)">❮</a>
+  <a class="next" onclick="changeSlide(1)">❯</a>
+</div>
+
+<!-- Dot navigation -->
+<div style="text-align:center">
+  <span class="dot" onclick="currentSlide(0)"></span>
+  <span class="dot" onclick="currentSlide(1)"></span>
+  <span class="dot" onclick="currentSlide(2)"></span>
+</div>
+
+<script>
+  let slideIndex = 0;
+  let autoSlide;
+
+  function showSlide(index) {
+    const slides = document.getElementsByClassName("slide");
+    const dots = document.getElementsByClassName("dot");
+    
+    if (index >= slides.length) slideIndex = 0;
+    if (index < 0) slideIndex = slides.length - 1;
+
+    for (let i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+    }
+
+    for (let i = 0; i < dots.length; i++) {
+      dots[i].classList.remove("active");
+    }
+
+    slides[slideIndex].style.display = "block";
+    dots[slideIndex].classList.add("active");
+  }
+
+  function changeSlide(n) {
+    slideIndex += n;
+    showSlide(slideIndex);
+  }
+
+  function currentSlide(n) {
+    slideIndex = n;
+    showSlide(slideIndex);
+  }
+
+  function startAutoSlide() {
+    autoSlide = setInterval(() => {
+      slideIndex++;
+      showSlide(slideIndex);
+    }, 3000);
+  }
+
+  function stopAutoSlide() {
+    clearInterval(autoSlide);
+  }
+
+  // Start on load
+  document.addEventListener("DOMContentLoaded", () => {
+    showSlide(slideIndex);
+    startAutoSlide();
+
+    const container = document.getElementById("slideshow-container");
+    container.addEventListener("mouseenter", stopAutoSlide);
+    container.addEventListener("mouseleave", startAutoSlide);
+  });
+</script>
+
+</body>
+</html>
