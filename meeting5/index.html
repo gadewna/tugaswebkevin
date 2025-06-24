@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table with Background Color Change</title>
+    <style>
+        table{
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td{
+            border: 1px;
+        }
+        th,td{
+            padding: 10px;
+            text-align: left;
+        }
+        .color-button{
+            margin: 5px;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align:center">
+  <span class="dot" onclick="currentSlide(0)"></span>
+  <span class="dot" onclick="currentSlide(1)"></span>
+  <span class="dot" onclick="currentSlide(2)"></span>
+</div>
+
+    <h1>Table with Background Color Change</h1>
+    <div>
+        <button class="color-button" style="background-color: lightblue;" onclick="changeColor('lightblue')">Light Blue</button>
+        <button class="color-button" style="background-color: lightgreen;" onclick="changeColor('lightgreen')">Light Green</button>
+        <button class="color-button" style="background-color: lightyellow;" onclick="changeColor('lightyellow')">Light Yellow</button>
+        <button class="color-button" style="background-color: lightpink;" onclick="changeColor('lightpink')">Light Pink</button>
+        <button class="color-button" style="background-color: lightgray;" onclick="changeColor('lightgray')">Light Gray</button>
+        <button class="color-button" style="background-color: rebeccapurple;" onclick="changeColor('rebeccapurple')">Rebecca Purple</button>
+        <button class="color-button" style="background-color: seagreen;" onclick="changeColor('seagreen')">Sea Green</button>
+        <button class="color-button" style="background-color: palegoldenrod;" onclick="changeColor('palegoldenrod')">YTellow</button>
+        <button class="color-button" style="background-color: bisque;" onclick="changeColor('bisque')">busqie   </button>
+    </div>
+    <table id="myTable">
+        <thead>
+            <tr>
+                <th>Header 1</th>
+                <th>Header 2</th>
+                <th>Header 3</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Data 1</td>
+                <td>Data 2</td>
+                <td>Data 3</td>
+            </tr>
+             <tr>
+                <td>Data 4</td>
+                <td>Data 5</td>
+                <td>Data 6</td>
+            </tr>
+             <tr>
+                <td>Data 7</td>
+                <td>Data 8</td>
+                <td>Data 9</td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        function changeColor(color){
+            document.getElementById('myTable').style.backgroundColor = color;
+        }
+    </script>
+    <script>
+    function changeColorRandomHex() {
+        const hex = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+        document.getElementById('myTable').style.backgroundColor = hex;
+    }
+</script>
+<button onclick="changeColorRandomHex()">Random HEX</button>
+<script>
+    let interval;
+    function startRandomColorLoop() {
+        const colors = ['lightblue', 'lightgreen', 'lightyellow', 'lightpink', 'lightgray', 'rebeccapurple', 'seagreen', 'palegoldenrod', 'bisque'];
+        if (interval) clearInterval(interval);
+        interval = setInterval(() => {
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            document.getElementById('myTable').style.backgroundColor = color;
+        }, 1000);
+    }
+
+    function stopRandomColorLoop() {
+        clearInterval(interval);
+    }
+</script>
+<button onclick="startRandomColorLoop()">Start Random Loop</button>
+<button onclick="stopRandomColorLoop()">Stop</button>
+<script>
+    function changeColorFromButtons() {
+        const buttons = document.querySelectorAll('.color-button');
+        const colors = Array.from(buttons).map(btn => btn.style.backgroundColor);
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        document.getElementById('myTable').style.backgroundColor = randomColor;
+    }
+</script>
+<button onclick="changeColorFromButtons()">Random from Buttons</button>
+
+<select id="colorSelector">
+    <option value="">Select a color</option>
+    <option value="lightblue">Light Blue</option>
+    <option value="lightgreen">Light Green</option>
+    <option value="lightyellow">Light Yellow</option>
+</select>
+
+<script>
+    document.getElementById('colorSelector').addEventListener('change', function() {
+        document.getElementById('myTable').style.backgroundColor = this.value;
+    });
+</script>
+<button onclick="setRandomColor()">Random Color</button>
+
+<script>
+    const colors = ['lightblue', 'lightgreen', 'lightyellow', 'lightpink', 'lightgray'];
+    
+    function setRandomColor() {
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        document.getElementById('myTable').style.backgroundColor = randomColor;
+    }
+</script>
+<script>
+function showSlide(index) {
+  const slides = document.getElementsByClassName("slide");
+  const dots = document.getElementsByClassName("dot");
+  if (index >= slides.length) slideIndex = 0;
+  if (index < 0) slideIndex = slides.length - 1;
+
+  for (let i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+
+  for (let i = 0; i < dots.length; i++) {
+    dots[i].classList.remove("active");
+  }
+
+  slides[slideIndex].style.display = "block";
+  dots[slideIndex].classList.add("active");
+}
+
+function currentSlide(n) {
+  slideIndex = n;
+  showSlide(slideIndex);
+}
+</script>
+</body>
+</html>
